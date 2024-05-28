@@ -25,7 +25,7 @@ jobs:
 
     - name: Build and tag Docker image
       run: |
-        TIMESTAMP=$(date +%s)
+        TIMESTAMP=$(date +%m)
         IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{ github.repository }}:${TIMESTAMP}"
         docker build . --file Dockerfile --tag "${IMAGE_NAME}"
       env:
@@ -33,6 +33,6 @@ jobs:
 
     - name: Push Docker image to Docker Hub
       run: |
-        TIMESTAMP=$(date +%s)
+        TIMESTAMP=$(date +%m)
         IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{ github.repository }}:${TIMESTAMP}"
         docker push "${IMAGE_NAME}"
