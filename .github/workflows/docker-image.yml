@@ -26,7 +26,7 @@ jobs:
     - name: Build and tag Docker image
       run: |
         TIMESTAMP=$(date +%s)
-        IMAGE_NAME="${{ github.repository }}:${TIMESTAMP}"
+        IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{ github.repository }}:${TIMESTAMP}"
         docker build . --file Dockerfile --tag "${IMAGE_NAME}"
       env:
         DOCKER_BUILDKIT: 1
