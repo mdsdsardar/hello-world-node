@@ -34,5 +34,5 @@ jobs:
     - name: Push Docker image to Docker Hub
       run: |
         TIMESTAMP=$(date +%s)
-        IMAGE_NAME="${{ github.repository }}:${TIMESTAMP}"
+        IMAGE_NAME="${{ secrets.DOCKER_USERNAME }}/${{ github.repository }}:${TIMESTAMP}"
         docker push "${IMAGE_NAME}"
