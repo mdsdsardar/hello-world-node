@@ -1,10 +1,11 @@
 name: Build Docker Image
 
 on:
-  push:
-    branches:
-      - master
-      - main  # You can change this to any branch you want to trigger the action on
+  workflow_dispatch:
+  #push:
+   # branches:
+   #   - master
+   #   - main  # You can change this to any branch you want to trigger the action on
 
 jobs:
   build:
