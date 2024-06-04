@@ -1,6 +1,15 @@
 # main.tf
 
 # Define AWS provider
+
+terraform {
+  backend "s3"{
+    bucket                 = "saadterraform"
+    region                 = "ap-south-1"
+    key                    = "backend.tfstate"
+    dynamodb_table         = "saadterraform"
+  }
+}
 provider "aws" {
   region = "ap-south-1"  # Update with your AWS region
 }
