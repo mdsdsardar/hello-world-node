@@ -1,4 +1,4 @@
-name: Terraform
+  name: Terraform
 
 on:
   workflow_dispatch:
@@ -54,5 +54,5 @@ jobs:
 
     - name: Terraform Destroy
       if: github.event.inputs.action == 'destroy'
-      run: terraform apply -auto-approve destroy.tfplan
+      run: terraform apply -auto-approve
       working-directory: ./terraform
