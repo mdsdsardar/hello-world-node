@@ -1,12 +1,8 @@
-# main.tf
-
-# Define AWS provider
-
 terraform {
   backend "s3"{
     bucket                 = "saadterraform"
     region                 = "ap-south-1"
-    key                    = "backend.tfstate"
+    key                    = "node.tfstate"
   }
 }
 provider "aws" {
