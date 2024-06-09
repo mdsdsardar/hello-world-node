@@ -7,7 +7,6 @@ terraform {
     bucket                 = "saadterraform"
     region                 = "ap-south-1"
     key                    = "backend.tfstate"
-    dynamodb_table         = "saadterraform"
   }
 }
 provider "aws" {
