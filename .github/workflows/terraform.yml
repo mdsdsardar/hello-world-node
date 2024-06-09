@@ -3,6 +3,13 @@ name: Terraform
 on:
   workflow_dispatch:
     inputs:
+      s3:
+        description: 'Create s3 bucket'
+        default: 'no'
+        type: choice
+        options:
+          - no
+          - yes
       action:
         description: 'Action to perform'
         required: true
@@ -22,6 +29,22 @@ jobs:
 
     - name: Setup Terraform
       uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform Init
+      if: github.event.inputs.s3 == 'true'
+      run: terraform init
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      working-directory: ./src
+
+    - name: Terraform Apply
+      if: github.event.inputs.s3 == 'true'
+      run: terraform apply -auto-approve
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+      working-directory: ./src
 
     - name: Terraform Init
       run: terraform init
@@ -49,10 +72,16 @@ jobs:
     - name: Remove Terraform Plan File
       if: github.event.inputs.action == 'apply'
       run: rm plan.tfplan
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       working-directory: ./terraform
 
 
     - name: Terraform Destroy
       if: github.event.inputs.action == 'destroy'
       run: terraform destroy -auto-approve
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       working-directory: ./terraform
