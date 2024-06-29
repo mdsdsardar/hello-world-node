@@ -26,7 +26,7 @@ jobs:
 
     - name: Build and tag Docker image
       run: |
-        TIMESTAMP=$(date +%m)
+        TIMESTAMP=$(date +%m-%d_%H-%M)
         IMAGE_NAME="${{ github.repository }}:${TIMESTAMP}"
         docker build . --file Dockerfile --tag "${IMAGE_NAME}"
         docker push "${IMAGE_NAME}"
