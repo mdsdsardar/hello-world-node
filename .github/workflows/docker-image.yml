@@ -26,13 +26,10 @@ jobs:
 
     - name: Build and tag Docker image
       run: |
-        IMAGE_NAME="${{ github.repository }}:latest"
+        TIMESTAMP=$(date +%m)
+        IMAGE_NAME="${{ github.repository }}:${TIMESTAMP}"
         docker build . --file Dockerfile --tag "${IMAGE_NAME}"
+        docker push "${IMAGE_NAME}"
       env:
         DOCKER_BUILDKIT: 1
 
-    - name: Push Docker image to Docker Hub
-      run: |
-        TIMESTAMP=$(date +%m)
-        IMAGE_NAME="${{ github.repository }}:latest"
-        docker push "${IMAGE_NAME}"
